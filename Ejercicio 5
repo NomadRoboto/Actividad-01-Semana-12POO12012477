@@ -1,0 +1,44 @@
+import java.util.Scanner;
+class Cadena {
+    private int longitud;
+    private String contenido;
+    public Cadena(String contenido) {
+        this.contenido = contenido;
+        this.longitud = contenido.length();
+    }
+    public int getLongitud() {
+        return longitud;
+    }
+    public String getContenido() {
+        return contenido;
+    }
+    public char caracter(int i) {
+        if (i >= 0 && i < longitud) {
+            return contenido.charAt(i);
+        } else {
+            return (char) -1; // Devuelve -1 si i es mayor que la longitud
+        }
+    }
+    public void visualizar() {
+        System.out.println("Contenido de la cadena: " + contenido);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese una cadena de caracteres: ");
+        String input = scanner.nextLine();
+        Cadena cadena = new Cadena(input);
+        cadena.visualizar();
+        System.out.println("Longitud de la cadena: " + cadena.getLongitud());
+        System.out.print("Ingrese un número para seleccionar el orden: ");
+        int indice = scanner.nextInt();
+        char caracter = cadena.caracter(indice);
+        if (caracter != -1) {
+            System.out.println("Carácter en el índice " + indice + ": " + caracter);
+        } else {
+            System.out.println("El índice " + indice + " es mayor que la longitud de la cadena.");
+        }
+    }
+}
+
