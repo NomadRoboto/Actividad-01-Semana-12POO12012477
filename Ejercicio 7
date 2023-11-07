@@ -1,0 +1,104 @@
+import java.util.Date;
+// Clase base Empleado
+class Empleado {
+    protected String nombre;
+    protected String dni;
+    protected Date fechaContrato;
+    protected double salarioBase;
+
+    public Empleado(String nombre, String dni, Date fechaContrato, double salarioBase) {
+        this.nombre = nombre;
+        this.dni = dni;
+        this.fechaContrato = fechaContrato;
+        this.salarioBase = salarioBase;
+    }
+
+    public double calcularSalario() {
+        // Lógica para calcular el salario
+        return salarioBase;
+    }
+
+    public void aplicarAumento(double porcentaje) {
+        salarioBase *= (1 + porcentaje);
+    }
+
+    public void darDeAlta() {
+        // Lógica para dar de alta al empleado
+    }
+
+    public void darDeBaja() {
+        // Lógica para dar de baja al empleado
+    }
+}
+
+// Subclase para Empleado con nivel de supervisor
+class Supervisor extends Empleado {
+    private double bonoSupervisor;
+
+    public Supervisor(String nombre, String dni, Date fechaContrato, double salarioBase, double bonoSupervisor) {
+        super(nombre, dni, fechaContrato, salarioBase);
+        this.bonoSupervisor = bonoSupervisor;
+    }
+
+    @Override
+    public double calcularSalario() {
+        // Incluye el bono del supervisor en el cálculo del salario
+        return salarioBase + bonoSupervisor;
+    }
+
+    public void promoverSubordinado(Empleado subordinado) {
+        // Lógica para promover a un subordinado
+    }
+}
+
+// Subclase para Empleado con nivel de director
+class Director extends Supervisor {
+    private double bonoDirector;
+
+    public Director(String nombre, String dni, Date fechaContrato, double salarioBase, double bonoSupervisor, double bonoDirector) {
+        super(nombre, dni, fechaContrato, salarioBase, bonoSupervisor);
+        this.bonoDirector = bonoDirector;
+    }
+
+    @Override
+    public double calcularSalario() {
+        // Incluye el bono del director en el cálculo del salario
+        return super.calcularSalario() + bonoDirector;
+    }
+
+    public void despedirEmpleado(Empleado empleado) {
+        // Lógica para despedir a un empleado
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Ejemplo de uso
+        Empleado empleado1 = new Empleado("Empleado1", "12345", new Date(), 2000.0);
+        Supervisor supervisor1 = new Supervisor("Supervisor1", "67890", new Date(), 3000.0, 500.0);
+        Director director1 = new Director("Director1", "ABCDE", new Date(), 4000.0, 500.0, 1000.0);
+
+        // Calcular salarios
+        double salarioEmpleado1 = empleado1.calcularSalario();
+        double salarioSupervisor1 = supervisor1.calcularSalario();
+        double salarioDirector1 = director1.calcularSalario();
+
+        System.out.println("Salario Empleado1: " + salarioEmpleado1);
+        System.out.println("Salario Supervisor1: " + salarioSupervisor1);
+        System.out.println("Salario Director1: " + salarioDirector1);
+
+        // Aplicar aumentos salariales
+        empleado1.aplicarAumento(0.1);
+        supervisor1.aplicarAumento(0.15);
+        director1.aplicarAumento(0.2);
+
+        // Calcular salarios después de aumentos
+        salarioEmpleado1 = empleado1.calcularSalario();
+        salarioSupervisor1 = supervisor1.calcularSalario();
+        salarioDirector1 = director1.calcularSalario();
+
+        System.out.println("Salario Empleado1 (después del aumento): " + salarioEmpleado1);
+        System.out.println("Salario Supervisor1 (después del aumento): " + salarioSupervisor1);
+        System.out.println("Salario Director1 (después del aumento): " + salarioDirector1);
+    }
+}
