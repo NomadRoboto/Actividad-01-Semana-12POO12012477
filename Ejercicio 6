@@ -1,0 +1,81 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class LAN {
+    private List<Nodo> nodos;
+    private String topologia;
+    private int tamanoPaquete;
+    public LAN() {
+        nodos = new ArrayList<>();
+        topologia = "Bus"; 
+        tamanoPaquete = 64; 
+    }
+    public void listarNodos() {
+        System.out.println("Nodos en la red LAN:");
+        for (Nodo nodo : nodos) {
+            System.out.println(nodo.obtenerNombre());
+        }
+    }
+
+    public void agregarNodo(Nodo nodo) {
+        nodos.add(nodo);
+    }
+
+    public void quitarNodo(Nodo nodo) {
+        nodos.remove(nodo);
+    }
+
+    public void configurarRed(String topologia, int tamanoPaquete) {
+        this.topologia = topologia;
+        this.tamanoPaquete = tamanoPaquete;
+    }
+
+    public void enviarPaquete(Nodo origen, Nodo destino) {
+        System.out.println("Enviando paquete desde " + origen.obtenerNombre() + " a " + destino.obtenerNombre());
+        
+        System.out.println("Paquete entregado a " + destino.obtenerNombre());
+    }
+
+    public void difundirPaquete(Nodo origen) {
+        System.out.println("Difundiendo paquete desde " + origen.obtenerNombre() + " a todos los nodos");
+        
+        for (Nodo nodo : nodos) {
+            if (nodo != origen) {
+                enviarPaquete(origen, nodo);
+            }
+        }
+    }
+    public void estadisticas() {
+        System.out.println("Estadísticas de la LAN:");
+        // Estadísticas simples
+        int tiempoPromedio = 10; // Ejemplo: tiempo promedio en ms
+        System.out.println("Tiempo promedio de entrega: " + tiempoPromedio + " ms");
+    }
+}
+class Nodo {
+    private String nombre;
+
+    public Nodo(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String obtenerNombre() {
+        return nombre;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        LAN lan = new LAN();
+        Nodo nodo1 = new Nodo("Nodo1");
+        Nodo nodo2 = new Nodo("Nodo2");
+        Nodo nodo3 = new Nodo("Nodo3");
+        lan.agregarNodo(nodo1);
+        lan.agregarNodo(nodo2);
+        lan.agregarNodo(nodo3);
+        lan.listarNodos();
+        lan.configurarRed("Estrella", 128);
+        lan.enviarPaquete(nodo1, nodo2);
+        lan.difundirPaquete(nodo3);
+        lan.estadisticas();
+    }
+}
